@@ -114,7 +114,7 @@ PhaserGame.prototype = {
 
     gameover: function (runner, obstacle) {
 
-        label = game.add.text(game.world.width / 2 , game.world.height / 2, 'Score: '+score+'\nGAME OVER\nPress SPACE to restart',
+        label = game.add.text(game.world.width / 2 , game.world.height / 2, 'Score: '+score+'\nGAME OVER\nPress ENTER to restart',
             { font: '22px Lucida Console', fill: '#fff', align: 'center'});
         label.anchor.setTo(0.5, 0.5);
 

@@ -1,0 +1,18 @@
+.img-icon {
+	width: 32px;
+	height: 32px;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.border {
+	border: 2px solid;
+}
+
+.margin-tb {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}

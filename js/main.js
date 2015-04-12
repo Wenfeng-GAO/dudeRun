@@ -19,7 +19,7 @@ var scoreText = null;
 var game = new Phaser.Game(width, height, Phaser.AUTO, 'game', true);
 
 var PhaserGame = function () {
-  
+    // var wasStanding = false;
 };
 
 PhaserGame.prototype = {
@@ -140,8 +140,7 @@ PhaserGame.prototype = {
 
     wrapPlatform: function (platform) {
 
-        if (platform.x < -platform.body.width)
-        {
+        if (platform.x < -platform.body.width) {
             platform.body.x = width;
         }
 
@@ -149,8 +148,7 @@ PhaserGame.prototype = {
 
     wrapStar: function (star) {
 
-        if (star.x < -star.body.width)
-        {
+        if (star.x < -star.body.width) {
             star.body.x = width;
         }
 
@@ -158,8 +156,7 @@ PhaserGame.prototype = {
 
     wrapObstacle: function (obstacle) {
 
-        if (obstacle.x < -obstacle.body.width)
-        {
+        if (obstacle.x < -obstacle.body.width) {
             obstacle.body.x = width;
         }
 
@@ -169,24 +166,33 @@ PhaserGame.prototype = {
     update: function () {
         //  Collide the runner and the stars with the platforms
         game.physics.arcade.collide(runner, platforms, this.setFriction, null, this);
-        game.physics.arcade.collide(runner, stars, this.collectStar, null, this);
         game.physics.arcade.collide(runner, obstacles, this.gameover, null, this);
+        game.physics.arcade.overlap(runner, stars, this.collectStar, null, this);
 
         // Movement of runner
         runner.body.velocity.x = 0;
-        if (v !== 0)
-        {
+        if (v !== 0) {
             runner.animations.play('right');
         }
 
+        // Jump if not yet
         var standing = runner.body.blocked.down || runner.body.touching.down;
-        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && standing) {
+        // Set timer when runner hits the ground
+        // if (!standing && this.wasStanding) {
+        //     this.timer = game.time.time;
+        // }
+
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && standing) {
             runner.body.velocity.y = -500;
         }
+
+        // Show the jumping image
         if (!standing && v !== 0) {
             runner.animations.stop();
             runner.frame = 6;
         }
+
+        this.wasStanding = standing;
 
         // Reuse the platforms stars and obstacles
         platforms.forEach(this.wrapPlatform, this);
